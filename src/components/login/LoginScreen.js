@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/authContext';
+import { types } from '../../types/types';
 
 
 export const LoginScreen = () => {
 
     const navigate = useNavigate();
+    const { dispatch } = useContext( AuthContext );
     
     const handleLogin = () => {
-        navigate('/marvel', {
+        dispatch({
+            type: types.login,
+            payload: { name: 'Freddy' }
+        });
+
+        const path = localStorage.getItem('lastLocation') || '/';
+
+        navigate(path, {
             // Remplaza la url actual para no omitir que se estuvo en /login
             // y no poder 'ir atras / back' en el navegador  
             replace: true, 
-
         });
     };
 
